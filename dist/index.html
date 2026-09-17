@@ -17,25 +17,26 @@
         <canvas id="game" aria-label="Explore the world and touch hidden squares to find them."></canvas>
         <header class="hud">
           <div class="brand"><span class="brand-mark">◆</span><span>FIND THE<br><strong>SQUARES</strong></span></div>
-          <div class="progress"><span>COLLECTION</span><strong id="progressText">0 / 45</strong><div class="meter"><i id="meterFill"></i></div></div>
+          <div class="progress"><span>COLLECTION</span><strong id="progressText">0 / 50</strong><div class="meter"><i id="meterFill"></i></div></div>
           <button class="catalog-button" id="catalogButton" aria-haspopup="dialog"><span>▦</span> Catalog</button>
         </header>
         <button class="map-button" id="mapButton" aria-expanded="false" aria-controls="miniMap">⌖ Map <kbd>M</kbd></button>
         <aside class="mini-map" id="miniMap" hidden aria-label="World map"><canvas id="mapCanvas" width="520" height="360"></canvas></aside>
         <aside class="biome-pill" id="biomePill">Forest Frontier</aside>
-        <div class="help-card"><kbd>WASD</kbd><span>or</span><kbd>← ↑ ↓ →</kbd><p>Move to explore</p></div>
+        <div class="help-card"><kbd>WASD</kbd><span>or</span><kbd>← ↑ ↓ →</kbd><kbd>E</kbd><p>Move / interact</p></div>
         <div class="touch-controls" aria-label="Touch movement controls">
           <button data-direction="up" aria-label="Move up">▲</button>
           <button data-direction="left" aria-label="Move left">◀</button>
           <button data-direction="down" aria-label="Move down">▼</button>
           <button data-direction="right" aria-label="Move right">▶</button>
+          <button class="interact" id="interactButton" aria-label="Interact with nearby object">E</button>
         </div>
         <div class="toast" id="toast" aria-live="polite"></div>
       </section>
     </main>
     <div class="modal-backdrop" id="backdrop" hidden>
       <section class="catalog-modal" role="dialog" aria-modal="true" aria-labelledby="catalogTitle">
-        <header class="catalog-header"><div><p class="eyebrow">YOUR COLLECTION</p><h1 id="catalogTitle">Square Catalog</h1><p id="catalogSummary">0 of 45 squares discovered</p></div><button class="close" id="closeCatalog" aria-label="Close catalog">×</button></header>
+        <header class="catalog-header"><div><p class="eyebrow">YOUR COLLECTION</p><h1 id="catalogTitle">Square Catalog</h1><p id="catalogSummary">0 of 50 squares discovered</p></div><button class="close" id="closeCatalog" aria-label="Close catalog">×</button></header>
         <div class="catalog-tabs" id="catalogTabs" role="tablist"></div>
         <div class="catalog-grid" id="catalogGrid"></div>
         <footer class="catalog-footer"><button class="reset" id="resetButton">Reset progress</button><p>Every square is hiding somewhere in the wild.</p></footer>
