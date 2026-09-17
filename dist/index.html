@@ -9,6 +9,7 @@
     <title>Find The Squares</title>
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="tiers.css" />
+    <link rel="stylesheet" href="map.css" />
   </head>
   <body>
     <main class="game-shell">
@@ -19,6 +20,8 @@
           <div class="progress"><span>COLLECTION</span><strong id="progressText">0 / 30</strong><div class="meter"><i id="meterFill"></i></div></div>
           <button class="catalog-button" id="catalogButton" aria-haspopup="dialog"><span>▦</span> Catalog</button>
         </header>
+        <button class="map-button" id="mapButton" aria-expanded="false" aria-controls="miniMap">⌖ Map <kbd>M</kbd></button>
+        <aside class="mini-map" id="miniMap" hidden aria-label="World map"><canvas id="mapCanvas" width="520" height="360"></canvas></aside>
         <aside class="biome-pill" id="biomePill">Forest Frontier</aside>
         <div class="help-card"><kbd>WASD</kbd><span>or</span><kbd>← ↑ ↓ →</kbd><p>Move to explore</p></div>
         <div class="touch-controls" aria-label="Touch movement controls">
