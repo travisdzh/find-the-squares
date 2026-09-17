@@ -86,7 +86,7 @@
     // Concealed cave portal to the ocean, surrounded by ordinary-looking stone.
     rock(screenX(hiddenPortal.x),screenY(hiddenPortal.y+25),120,82,'#36354e');ctx.strokeStyle='#936cff';ctx.lineWidth=7;ctx.beginPath();ctx.arc(screenX(hiddenPortal.x),screenY(hiddenPortal.y),34,Math.PI,0);ctx.stroke();ctx.fillStyle='#8d6bff66';ctx.fillRect(screenX(hiddenPortal.x-31),screenY(hiddenPortal.y),62,37);
     // region name labels
-    biomes.forEach(b=>{let cx=(b.range[0]+b.range[1])/2;ctx.fillStyle='#fff8';ctx.font='900 14px Nunito';ctx.textAlign='center';ctx.fillText(b.name.toUpperCase(),screenX(cx),screenY(95))});
+    biomes.filter(b=>b.range).forEach(b=>{let cx=(b.range[0]+b.range[1])/2;ctx.fillStyle='#fff8';ctx.font='900 14px Nunito';ctx.textAlign='center';ctx.fillText(b.name.toUpperCase(),screenX(cx),screenY(95))});
     squares.forEach(s=>{let x=screenX(s.x),y=screenY(s.y),f=found[s.id],near=Math.hypot(player.x-s.x,player.y-s.y)<125;if(f||(s.tier!=='Easy'&&!near))return;ctx.save();ctx.translate(x,y);ctx.rotate(Math.PI/4);ctx.fillStyle='#182735';ctx.fillRect(-13,-11,27,27);ctx.fillStyle=s.color;ctx.fillRect(-11,-13,23,23);ctx.fillStyle='#fff8';ctx.fillRect(-8,-10,9,9);ctx.restore();ctx.fillStyle='#fff';ctx.font='900 12px Nunito';ctx.textAlign='center';ctx.fillText('?',x,y-24)});
     // player
     drawPlayer()
