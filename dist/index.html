@@ -17,7 +17,7 @@
         <canvas id="game" aria-label="Explore the world and touch hidden squares to find them."></canvas>
         <header class="hud">
           <div class="brand"><span class="brand-mark">◆</span><span>FIND THE<br><strong>SQUARES</strong></span></div>
-          <div class="progress"><span>COLLECTION</span><strong id="progressText">0 / 35</strong><div class="meter"><i id="meterFill"></i></div></div>
+          <div class="progress"><span>COLLECTION</span><strong id="progressText">0 / 40</strong><div class="meter"><i id="meterFill"></i></div></div>
           <button class="catalog-button" id="catalogButton" aria-haspopup="dialog"><span>▦</span> Catalog</button>
         </header>
         <button class="map-button" id="mapButton" aria-expanded="false" aria-controls="miniMap">⌖ Map <kbd>M</kbd></button>
@@ -35,7 +35,7 @@
     </main>
     <div class="modal-backdrop" id="backdrop" hidden>
       <section class="catalog-modal" role="dialog" aria-modal="true" aria-labelledby="catalogTitle">
-        <header class="catalog-header"><div><p class="eyebrow">YOUR COLLECTION</p><h1 id="catalogTitle">Square Catalog</h1><p id="catalogSummary">0 of 35 squares discovered</p></div><button class="close" id="closeCatalog" aria-label="Close catalog">×</button></header>
+        <header class="catalog-header"><div><p class="eyebrow">YOUR COLLECTION</p><h1 id="catalogTitle">Square Catalog</h1><p id="catalogSummary">0 of 40 squares discovered</p></div><button class="close" id="closeCatalog" aria-label="Close catalog">×</button></header>
         <div class="catalog-tabs" id="catalogTabs" role="tablist"></div>
         <div class="catalog-grid" id="catalogGrid"></div>
         <footer class="catalog-footer"><button class="reset" id="resetButton">Reset progress</button><p>Every square is hiding somewhere in the wild.</p></footer>
