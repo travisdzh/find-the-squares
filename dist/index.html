@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#102333" />
+    <meta name="description" content="Explore four wild biomes and find every hidden square." />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <title>Find The Squares</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="game-shell">
+      <section class="game-frame" aria-label="Find The Squares game">
+        <canvas id="game" aria-label="Explore the world and touch hidden squares to find them."></canvas>
+        <header class="hud">
+          <div class="brand"><span class="brand-mark">◆</span><span>FIND THE<br><strong>SQUARES</strong></span></div>
+          <div class="progress"><span>COLLECTION</span><strong id="progressText">0 / 20</strong><div class="meter"><i id="meterFill"></i></div></div>
+          <button class="catalog-button" id="catalogButton" aria-haspopup="dialog"><span>▦</span> Catalog</button>
+        </header>
+        <aside class="biome-pill" id="biomePill">Forest Frontier</aside>
+        <div class="help-card"><kbd>WASD</kbd><span>or</span><kbd>← ↑ ↓ →</kbd><p>Move to explore</p></div>
+        <div class="touch-controls" aria-label="Touch movement controls">
+          <button data-direction="up" aria-label="Move up">▲</button>
+          <button data-direction="left" aria-label="Move left">◀</button>
+          <button data-direction="down" aria-label="Move down">▼</button>
+          <button data-direction="right" aria-label="Move right">▶</button>
+        </div>
+        <div class="toast" id="toast" aria-live="polite"></div>
+      </section>
+    </main>
+    <div class="modal-backdrop" id="backdrop" hidden>
+      <section class="catalog-modal" role="dialog" aria-modal="true" aria-labelledby="catalogTitle">
+        <header class="catalog-header"><div><p class="eyebrow">YOUR COLLECTION</p><h1 id="catalogTitle">Square Catalog</h1><p id="catalogSummary">0 of 20 squares discovered</p></div><button class="close" id="closeCatalog" aria-label="Close catalog">×</button></header>
+        <div class="catalog-tabs" id="catalogTabs" role="tablist"></div>
+        <div class="catalog-grid" id="catalogGrid"></div>
+        <footer class="catalog-footer"><button class="reset" id="resetButton">Reset progress</button><p>Every square is hiding somewhere in the wild.</p></footer>
+      </section>
+    </div>
+    <div class="modal-backdrop" id="confirmBackdrop" hidden>
+      <section class="confirm-modal" role="alertdialog" aria-modal="true" aria-labelledby="confirmTitle"><p class="eyebrow">ARE YOU SURE?</p><h2 id="confirmTitle">Start a fresh collection?</h2><p>This removes all found squares from this device.</p><div><button id="cancelReset" class="secondary">Keep progress</button><button id="confirmReset" class="danger">Reset collection</button></div></section>
+    </div>
+    <script src="game.js"></script>
+  </body>
+</html>
