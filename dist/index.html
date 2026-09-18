@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="tiers.css" />
     <link rel="stylesheet" href="map.css" />
+    <link rel="stylesheet" href="home.css" />
   </head>
   <body>
     <main class="game-shell">
@@ -18,7 +19,7 @@
         <header class="hud">
           <div class="brand"><span class="brand-mark">◆</span><span>FIND THE<br><strong>SQUARES</strong></span></div>
           <div class="progress"><span>COLLECTION</span><strong id="progressText">0 / 50</strong><div class="meter"><i id="meterFill"></i></div></div>
-          <button class="catalog-button" id="catalogButton" aria-haspopup="dialog"><span>▦</span> Catalog</button>
+          <div class="hud-actions"><button class="home-button" id="homeButton" aria-label="Open home menu">⌂</button><button class="catalog-button" id="catalogButton" aria-haspopup="dialog"><span>▦</span> Catalog</button></div>
         </header>
         <button class="map-button" id="mapButton" aria-expanded="false" aria-controls="miniMap">⌖ Map <kbd>M</kbd></button>
         <aside class="mini-map" id="miniMap" hidden aria-label="World map"><canvas id="mapCanvas" width="520" height="360"></canvas></aside>
@@ -34,6 +35,41 @@
         <div class="toast" id="toast" aria-live="polite"></div>
       </section>
     </main>
+    <div class="modal-backdrop home-backdrop" id="homeBackdrop">
+      <section class="home-modal" role="dialog" aria-modal="true" aria-labelledby="homeTitle">
+        <div class="home-emblem" aria-hidden="true">◆</div>
+        <p class="eyebrow">A 2D COLLECTION ADVENTURE</p>
+        <h1 id="homeTitle">FIND THE<br><span>SQUARES</span></h1>
+        <p class="home-copy">Explore every biome. Find every secret.</p>
+        <nav class="home-menu" aria-label="Game menu">
+          <button class="home-play" id="playButton">Play</button>
+          <button id="settingsButton">Settings</button>
+          <button id="changelogButton">Changelog</button>
+        </nav>
+        <section class="home-panel" id="settingsPanel" hidden aria-labelledby="settingsTitle">
+          <button class="panel-back" data-home-back aria-label="Back to home menu">← Back</button>
+          <h2 id="settingsTitle">Settings</h2>
+          <p>Player colour</p>
+          <div class="color-picker" role="group" aria-label="Player colour">
+            <button data-player-color="#80dbdc" aria-label="Aqua player colour"></button><button data-player-color="#ff8ca3" aria-label="Pink player colour"></button><button data-player-color="#a9d978" aria-label="Green player colour"></button><button data-player-color="#a98dff" aria-label="Purple player colour"></button><button data-player-color="#ffb84d" aria-label="Gold player colour"></button>
+          </div>
+          <button class="home-reset" id="homeResetButton">Reset progress</button>
+        </section>
+        <section class="home-panel changelog-panel" id="changelogPanel" hidden aria-labelledby="changelogTitle">
+          <button class="panel-back" data-home-back aria-label="Back to home menu">← Back</button>
+          <h2 id="changelogTitle">Changelog</h2>
+          <ul>
+            <li><strong>18/9/2026</strong> — Home screen, player colours, Settings, and Changelog added.</li>
+            <li><strong>17/9/2026</strong> — Murkfen Swamp added with interactive hard squares.</li>
+            <li><strong>17/9/2026</strong> — Emberfall Volcano added; catalog can sort All squares by difficulty.</li>
+            <li><strong>17/9/2026</strong> — Frostveil Ice Caves, sealed chamber, maze map, and button puzzle added.</li>
+            <li><strong>17/9/2026</strong> — Ocean, oil rig, and Ironworks Factory added.</li>
+            <li><strong>17/9/2026</strong> — Larger mainland, obstacles, collectible difficulties, maps, and 50 squares added.</li>
+            <li><strong>17/9/2026</strong> — Game published</li>
+          </ul>
+        </section>
+      </section>
+    </div>
     <div class="modal-backdrop" id="backdrop" hidden>
       <section class="catalog-modal" role="dialog" aria-modal="true" aria-labelledby="catalogTitle">
         <header class="catalog-header"><div><p class="eyebrow">YOUR COLLECTION</p><h1 id="catalogTitle">Square Catalog</h1><p id="catalogSummary">0 of 50 squares discovered</p></div><button class="close" id="closeCatalog" aria-label="Close catalog">×</button></header>
