@@ -246,4 +246,7 @@
   const mainlandBlocked=blocked;blocked=function(x,y){return inMushroom?false:mainlandBlocked(x,y)};
   function keepMushroomBounds(){if(inMushroom){player.x=Math.max(player.r,Math.min(MUSH_W-player.r,player.x));player.y=Math.max(player.r,Math.min(MUSH_H-player.r,player.y))}requestAnimationFrame(keepMushroomBounds)}requestAnimationFrame(keepMushroomBounds);
   const baseMushroomRender=drawMushroom;drawMushroom=function(vw,vh){baseMushroomRender(vw,vh);if(!inMushroom)return;let x=screenX(mushroomExit.x),y=screenY(mushroomExit.y);ctx.strokeStyle='#fff1ff';ctx.lineWidth=8;ctx.beginPath();ctx.arc(x,y,42,0,7);ctx.stroke();ctx.strokeStyle='#ff75dc';ctx.lineWidth=4;ctx.beginPath();ctx.arc(x,y,28,0,7);ctx.stroke();ctx.fillStyle='#ffe5fb';ctx.font='900 12px Nunito';ctx.textAlign='center';ctx.fillText('RETURN TO SWAMP',x,y+66);ctx.strokeStyle='#b96dce';ctx.lineWidth=7;ctx.strokeRect(screenX(4),screenY(4),MUSH_W-8,MUSH_H-8)};
+  // Disable mainland random-event portals while exploring Mushroom Realm.
+  const regularVoidTick=voidTick;voidTick=function(){if(inMushroom){blackHole.active=false;blackHole.next=Date.now()+60000;requestAnimationFrame(voidTick);return}regularVoidTick()};
+  function isolateMushroomRealm(){if(inMushroom){dot.x=-999;dot.y=-999;dot.next=Date.now()+60000;blackHole.active=false}else if(dot.x===-999&&dot.y===-999){dot.next=0}requestAnimationFrame(isolateMushroomRealm)}requestAnimationFrame(isolateMushroomRealm);
 })();
