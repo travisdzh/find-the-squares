@@ -264,4 +264,7 @@
   const mushroomCameraController=moveInsideMushroom;moveInsideMushroom=function(t){mushroomCameraController(t);if(inMushroom){let rect=canvas.getBoundingClientRect();camera.x=Math.max(0,Math.min(MUSH_W-rect.width,player.x-rect.width/2));camera.y=Math.max(0,Math.min(MUSH_H-rect.height,player.y-rect.height/2))}};
   // The character is an HTML overlay; resync it after the Mushroom Realm camera moves.
   const cameraSyncedMushroomMove=moveInsideMushroom;moveInsideMushroom=function(t){cameraSyncedMushroomMove(t);if(inMushroom)syncPlayerSprite()};
+  // A dedicated render camera prevents the mainland loop from re-centering Mushroom Realm.
+  let mushroomCamera={x:0,y:0};const mainlandScreenX=screenX,mainlandScreenY=screenY;screenX=function(x){return x-(inMushroom?mushroomCamera.x:camera.x)};screenY=function(y){return y-(inMushroom?mushroomCamera.y:camera.y)};
+  const mushroomRenderCameraMove=moveInsideMushroom;moveInsideMushroom=function(t){mushroomRenderCameraMove(t);if(inMushroom){let rect=canvas.getBoundingClientRect();mushroomCamera.x=Math.max(0,Math.min(MUSH_W-rect.width,player.x-rect.width/2));mushroomCamera.y=Math.max(0,Math.min(MUSH_H-rect.height,player.y-rect.height/2));syncPlayerSprite()}else{mushroomCamera.x=0;mushroomCamera.y=0}};
 })();
