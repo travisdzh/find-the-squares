@@ -249,4 +249,7 @@
   // Disable mainland random-event portals while exploring Mushroom Realm.
   const regularVoidTick=voidTick;voidTick=function(){if(inMushroom){blackHole.active=false;blackHole.next=Date.now()+60000;requestAnimationFrame(voidTick);return}regularVoidTick()};
   function isolateMushroomRealm(){if(inMushroom){dot.x=-999;dot.y=-999;dot.next=Date.now()+60000;blackHole.active=false}else if(dot.x===-999&&dot.y===-999){dot.next=0}requestAnimationFrame(isolateMushroomRealm)}requestAnimationFrame(isolateMushroomRealm);
+  // Put the return gate in a clear entrance-side clearing and give the realm its own collision-free movement.
+  Object.assign(mushroomExit,{x:500,y:1180,r:78});
+  let mushroomMoveAt=0;function moveInsideMushroom(t){if(inMushroom&&backdrop.hidden&&confirm.hidden&&homeBackdrop.hidden){let dt=Math.min(.035,(t-mushroomMoveAt)/1000||.016),dx=(keys.d||keys.arrowright||touch.right?1:0)-(keys.a||keys.arrowleft||touch.left?1:0),dy=(keys.s||keys.arrowdown||touch.down?1:0)-(keys.w||keys.arrowup||touch.up?1:0);if(dx||dy){let length=Math.hypot(dx,dy);player.x=Math.max(player.r,Math.min(MUSH_W-player.r,player.x+dx/length*player.speed*dt));player.y=Math.max(player.r,Math.min(MUSH_H-player.r,player.y+dy/length*player.speed*dt))}}mushroomMoveAt=t;requestAnimationFrame(moveInsideMushroom)}requestAnimationFrame(moveInsideMushroom);
 })();
