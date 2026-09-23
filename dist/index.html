@@ -22,10 +22,11 @@
           <div class="progress"><span>COLLECTION</span><strong id="progressText">0 / 98</strong><div class="meter"><i id="meterFill"></i></div></div>
           <div class="hud-actions"><button class="home-button" id="homeButton" aria-label="Open home menu">⌂</button><button class="catalog-button" id="catalogButton" aria-haspopup="dialog"><span>▦</span> Catalog</button></div>
         </header>
+        <aside class="sprint-meter" id="sprintMeter" aria-label="Sprint energy"><span>SPRINT <kbd>SHIFT</kbd></span><div><i id="sprintFill"></i></div><b id="sprintValue">100%</b></aside>
         <button class="map-button" id="mapButton" aria-expanded="false" aria-controls="miniMap">⌖ Map <kbd>M</kbd></button>
         <aside class="mini-map" id="miniMap" hidden aria-label="World map"><canvas id="mapCanvas" width="520" height="360"></canvas></aside>
         <aside class="biome-pill" id="biomePill">Forest Frontier</aside>
-        <div class="help-card"><kbd>WASD</kbd><span>or</span><kbd>← ↑ ↓ →</kbd><kbd>E</kbd><p>Move / interact</p></div>
+        <div class="help-card"><kbd>WASD</kbd><span>or</span><kbd>← ↑ ↓ →</kbd><kbd>SHIFT</kbd><kbd>E</kbd><p>Move / sprint / interact</p></div>
         <div class="touch-controls" aria-label="Touch movement controls">
           <button data-direction="up" aria-label="Move up">▲</button>
           <button data-direction="left" aria-label="Move left">◀</button>
@@ -95,6 +96,6 @@
     <div class="modal-backdrop" id="confirmBackdrop" hidden>
       <section class="confirm-modal" role="alertdialog" aria-modal="true" aria-labelledby="confirmTitle"><p class="eyebrow">ARE YOU SURE?</p><h2 id="confirmTitle">Start a fresh collection?</h2><p>This removes all found squares from this device.</p><div><button id="cancelReset" class="secondary">Keep progress</button><button id="confirmReset" class="danger">Reset collection</button></div></section>
     </div>
-    <script src="game.js?v=full-mainland-biomes-v1"></script>
+    <script src="game.js?v=sprint-v1"></script>
   </body>
 </html>
