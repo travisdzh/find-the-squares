@@ -1,6 +1,6 @@
 (() => {
   const canvas = document.querySelector('#game'), ctx = canvas.getContext('2d');
-  const W=9500,H=3000,OCEAN_W=7200,OCEAN_H=4200,FACTORY_W=1200,FACTORY_H=3000,ICE_W=1800,ICE_H=3000,ABYSS_W=2600,ABYSS_H=2200,BASEMENT_W=1000,BASEMENT_H=900,PLINKO_W=1200,PLINKO_H=1200,MOON_W=2400,MOON_H=1600,MOONBASE_W=1000,MOONBASE_H=900,VOID_W=4400,VOID_H=2800, player={x:330,y:900,r:19,speed:270}, keys={}, touch={};
+  const W=9600,H=3000,OCEAN_W=7200,OCEAN_H=4200,FACTORY_W=1200,FACTORY_H=3000,ICE_W=1800,ICE_H=3000,ABYSS_W=2600,ABYSS_H=2200,BASEMENT_W=1000,BASEMENT_H=900,PLINKO_W=1200,PLINKO_H=1200,MOON_W=2400,MOON_H=1600,MOONBASE_W=1000,MOONBASE_H=900,VOID_W=4400,VOID_H=2800, player={x:330,y:900,r:19,speed:270}, keys={}, touch={};
   const biomes=[
     {id:'forest',name:'Forest Frontier',range:[0,1200],base:'#3f8b59',dark:'#206642',accent:'#8fc968'},
     {id:'desert',name:'Sunkissed Dunes',range:[1200,2400],base:'#dca95b',dark:'#bb7042',accent:'#f5d36a'},
@@ -9,7 +9,7 @@
     {id:'volcano',name:'Emberfall Volcano',range:[4800,6000],base:'#7f4337',dark:'#4c252b',accent:'#ff8856'},
     {id:'swamp',name:'Murkfen Swamp',range:[6000,7200],base:'#486b48',dark:'#293f38',accent:'#b4d86b'},
     {id:'taiga',name:'Silverpine Taiga',range:[7200,8400],base:'#426a63',dark:'#1e3f42',accent:'#d9f2dc'},
-    {id:'jungle',name:'Verdant Jungle',range:[8400,9500],base:'#28734d',dark:'#123f35',accent:'#b6e96d'},
+    {id:'jungle',name:'Verdant Jungle',range:[8400,9600],base:'#28734d',dark:'#123f35',accent:'#b6e96d'},
     {id:'ocean',name:'The Azure Expanse',range:null,base:'#1c87ae',dark:'#09546f',accent:'#86eaff'},
     {id:'factory',name:'Ironworks Factory',range:null,base:'#6a5550',dark:'#382f32',accent:'#ffb347'},
     {id:'ice',name:'Frostveil Ice Caves',range:null,base:'#83d6e8',dark:'#215f87',accent:'#d8fbff'},
