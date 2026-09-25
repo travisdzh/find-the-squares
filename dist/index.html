@@ -19,7 +19,7 @@
         <div class="player-sprite" id="playerSprite" aria-label="Player character" hidden><i class="player-head"></i><i class="player-body"></i><i class="player-arm left"></i><i class="player-arm right"></i><i class="player-leg left"></i><i class="player-leg right"></i></div>
         <header class="hud">
           <div class="brand"><span class="brand-mark">◆</span><span>FIND THE<br><strong>SQUARES</strong></span></div>
-          <div class="progress"><span>COLLECTION</span><strong id="progressText">0 / 100</strong><div class="meter"><i id="meterFill"></i></div></div>
+          <div class="progress"><span>COLLECTION</span><strong id="progressText">0 / 109</strong><div class="meter"><i id="meterFill"></i></div></div>
           <div class="hud-actions"><button class="home-button" id="homeButton" aria-label="Open home menu">⌂</button><button class="catalog-button" id="catalogButton" aria-haspopup="dialog"><span>▦</span> Catalog</button></div>
         </header>
         <aside class="sprint-meter" id="sprintMeter" aria-label="Sprint energy"><span>SPRINT <kbd>SHIFT</kbd></span><div><i id="sprintFill"></i></div><b id="sprintValue">100%</b></aside>
@@ -64,6 +64,7 @@
           <button class="panel-back" data-home-back aria-label="Back to home menu">← Back</button>
           <h2 id="changelogTitle">Changelog</h2>
           <ul>
+            <li><strong>25/9/2026</strong> — Cloudlands added: sky bridges, storm clouds, Upper Atmosphere, and the Eye of the Storm.</li>
             <li><strong>24/9/2026</strong> — Centennial Square, Stage 5 obby, and the 100 finale added.</li>
             <li><strong>24/9/2026</strong> — NULL_100 secret terminal dimension and corrupted challenge gauntlet added.</li>
             <li><strong>24/9/2026</strong> — Mainland dimension-rune relay and Cyberspace terminal added.</li>
@@ -92,7 +93,7 @@
     </div>
     <div class="modal-backdrop" id="backdrop" hidden>
       <section class="catalog-modal" role="dialog" aria-modal="true" aria-labelledby="catalogTitle">
-        <header class="catalog-header"><div><p class="eyebrow">YOUR COLLECTION</p><h1 id="catalogTitle">Square Catalog</h1><p id="catalogSummary">0 of 100 squares discovered</p></div><button class="close" id="closeCatalog" aria-label="Close catalog">×</button></header>
+        <header class="catalog-header"><div><p class="eyebrow">YOUR COLLECTION</p><h1 id="catalogTitle">Square Catalog</h1><p id="catalogSummary">0 of 109 squares discovered</p></div><button class="close" id="closeCatalog" aria-label="Close catalog">×</button></header>
         <div class="catalog-tabs" id="catalogTabs" role="tablist"></div>
         <div class="catalog-grid" id="catalogGrid"></div>
         <footer class="catalog-footer"><button class="reset" id="resetButton">Reset progress</button><p>Every square is hiding somewhere in the wild.</p></footer>
@@ -101,6 +102,6 @@
     <div class="modal-backdrop" id="confirmBackdrop" hidden>
       <section class="confirm-modal" role="alertdialog" aria-modal="true" aria-labelledby="confirmTitle"><p class="eyebrow">ARE YOU SURE?</p><h2 id="confirmTitle">Start a fresh collection?</h2><p>This removes all found squares from this device.</p><div><button id="cancelReset" class="secondary">Keep progress</button><button id="confirmReset" class="danger">Reset collection</button></div></section>
     </div>
-<script src="game.js?v=toast-squares-only-v2"></script>
+<script src="game.js?v=cloudlands-v1"></script>
   </body>
 </html>
