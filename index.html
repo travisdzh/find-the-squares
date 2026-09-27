@@ -7,7 +7,7 @@
     <meta name="description" content="Explore four wild biomes and find every hidden square." />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <title>Find The Squares</title>
-    <link rel="stylesheet" href="styles.css?v=sprint-left-v1" />
+    <link rel="stylesheet" href="styles.css?v=health-v1" />
     <link rel="stylesheet" href="tiers.css" />
     <link rel="stylesheet" href="map.css" />
     <link rel="stylesheet" href="home.css?v=player-fix" />
@@ -23,6 +23,7 @@
           <div class="hud-actions"><button class="home-button" id="homeButton" aria-label="Open home menu">⌂</button><button class="catalog-button" id="catalogButton" aria-haspopup="dialog"><span>▦</span> Catalog</button></div>
         </header>
         <aside class="sprint-meter" id="sprintMeter" aria-label="Sprint energy"><span>SPRINT <kbd>SHIFT</kbd></span><div><i id="sprintFill"></i></div><b id="sprintValue">100%</b></aside>
+        <aside class="health-meter" id="healthMeter" aria-label="Health"><span>HEALTH</span><div><i id="healthFill"></i></div><b id="healthValue">100%</b></aside>
         <button class="map-button" id="mapButton" aria-expanded="false" aria-controls="miniMap">⌖ Map <kbd>M</kbd></button>
         <aside class="mini-map" id="miniMap" hidden aria-label="World map"><canvas id="mapCanvas" width="520" height="360"></canvas></aside>
         <aside class="biome-pill" id="biomePill">Forest Frontier</aside>
@@ -102,6 +103,6 @@
     <div class="modal-backdrop" id="confirmBackdrop" hidden>
       <section class="confirm-modal" role="alertdialog" aria-modal="true" aria-labelledby="confirmTitle"><p class="eyebrow">ARE YOU SURE?</p><h2 id="confirmTitle">Start a fresh collection?</h2><p>This removes all found squares from this device.</p><div><button id="cancelReset" class="secondary">Keep progress</button><button id="confirmReset" class="danger">Reset collection</button></div></section>
     </div>
-<script src="game.js?v=cloudlands-storm-eye-extreme-v2"></script>
+<script src="game.js?v=cloudlands-lightning-health-v1"></script>
   </body>
 </html>
