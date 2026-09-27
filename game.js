@@ -365,12 +365,12 @@ const centennialBait={x:3820,y:600},finalObbyStart={x:3660,y:600},finalRoom={x:5
     {x:560,y:2100,rx:370,ry:220,kind:'peace'},{x:1240,y:1960,rx:300,ry:175,kind:'peace'},{x:1850,y:2260,rx:350,ry:205,kind:'rain'},
     {x:2450,y:1800,rx:270,ry:160,kind:'peace'},{x:2780,y:2440,rx:260,ry:155,kind:'peace'},{x:3340,y:2050,rx:290,ry:165,kind:'storm',move:1},
     {x:3920,y:2420,rx:245,ry:145,kind:'storm',move:2},{x:4320,y:1950,rx:270,ry:160,kind:'storm',move:3},{x:4750,y:1680,rx:220,ry:130,kind:'storm',move:4},{x:4080,y:1110,rx:255,ry:150,kind:'storm'},
-    {x:1380,y:1140,rx:210,ry:120,kind:'upper'},{x:1660,y:930,rx:155,ry:95,kind:'upper'},{x:2090,y:740,rx:130,ry:82,kind:'upper'},
+    {x:1400,y:1700,rx:120,ry:95,kind:'upper',move:5,fast:true},{x:1260,y:1530,rx:120,ry:95,kind:'upper',move:6,fast:true},{x:1450,y:1360,rx:120,ry:95,kind:'upper',move:7,fast:true},{x:1330,y:1200,rx:120,ry:95,kind:'upper',move:8,fast:true},{x:1380,y:1140,rx:210,ry:120,kind:'upper'},{x:1660,y:930,rx:155,ry:95,kind:'upper'},{x:2090,y:740,rx:130,ry:82,kind:'upper'},
     {x:2580,y:620,rx:115,ry:70,kind:'upper'},{x:2860,y:510,rx:92,ry:58,kind:'upper'},{x:3140,y:520,rx:86,ry:55,kind:'upper'},
     {x:6500,y:2100,rx:46,ry:34,kind:'eye'}
   ];
-  const cloudRainbows=[[[820,2070],[980,2000]],[[1510,1990],[1600,2120]],[[2130,2160],[2310,1900]],[[2600,1880],[2710,2310]],[[3000,2370],[3160,2140]],[[3550,2050],[3750,2320]],[[4160,2320],[4220,2070]],[[4510,1880],[4640,1760]],[[4800,1680],[5180,1840]],[[4280,1870],[4130,1250]],[[1410,1830],[1380,1240]],[[1510,1150],[1550,1020]],[[1810,900],[1990,780]],[[2200,700],[2470,640]],[[2680,580],[2780,540]],[[2950,520],[3050,520]]];
-  function cloudIslandPosition(c){let wobble=c.move?Math.sin(last*.0011+c.move)*110:0;return{x:c.x+wobble,y:c.y+(c.move?Math.cos(last*.0015+c.move)*48:0)}}
+  const cloudRainbows=[[[820,2070],[980,2000]],[[1510,1990],[1600,2120]],[[2130,2160],[2310,1900]],[[2600,1880],[2710,2310]],[[3000,2370],[3160,2140]],[[3550,2050],[3750,2320]],[[4160,2320],[4220,2070]],[[4510,1880],[4640,1760]],[[4800,1680],[5180,1840]],[[4280,1870],[4130,1250]],[[1510,1150],[1550,1020]],[[1810,900],[1990,780]],[[2200,700],[2470,640]],[[2680,580],[2780,540]],[[2950,520],[3050,520]]];
+  function cloudIslandPosition(c){let wobble=c.move?Math.sin(last*(c.fast?.0042:.0011)+c.move)*(c.fast?70:110):0;return{x:c.x+wobble,y:c.y+(c.move?Math.cos(last*(c.fast?.0051:.0015)+c.move)*(c.fast?42:48):0)}}
   function segmentDist(px,py,a,b){let dx=b[0]-a[0],dy=b[1]-a[1],t=Math.max(0,Math.min(1,((px-a[0])*dx+(py-a[1])*dy)/(dx*dx+dy*dy||1)));return Math.hypot(px-(a[0]+t*dx),py-(a[1]+t*dy))}
   function cloudRainbowWidth(r){return r[0][0]>=3500&&r[0][0]<5200?43:62}
   function onCloudGround(x,y){return cloudIslands.some(c=>{let p=cloudIslandPosition(c);return ((x-p.x)/c.rx)**2+((y-p.y)/c.ry)**2<1})||cloudRainbows.some(r=>segmentDist(x,y,r[0],r[1])<cloudRainbowWidth(r))}
