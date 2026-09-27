@@ -374,12 +374,13 @@ const centennialBait={x:3820,y:600},finalObbyStart={x:3660,y:600},finalRoom={x:5
   function segmentDist(px,py,a,b){let dx=b[0]-a[0],dy=b[1]-a[1],t=Math.max(0,Math.min(1,((px-a[0])*dx+(py-a[1])*dy)/(dx*dx+dy*dy||1)));return Math.hypot(px-(a[0]+t*dx),py-(a[1]+t*dy))}
   function cloudRainbowWidth(r){return r[0][0]>=3500&&r[0][0]<5200?43:62}
   function onCloudGround(x,y){return cloudIslands.some(c=>{let p=cloudIslandPosition(c);return ((x-p.x)/c.rx)**2+((y-p.y)/c.ry)**2<1})||cloudRainbows.some(r=>segmentDist(x,y,r[0],r[1])<cloudRainbowWidth(r))}
-  let health=100,lightningHitUntil=0;
+  let health=100,lightningHitUntil=0,healthRegenAt=0;
   function setHealth(value){health=Math.max(0,Math.min(100,value));$('#healthFill').style.width=`${health}%`;$('#healthValue').textContent=`${health}%`;$('#healthMeter').setAttribute('aria-label',`Health ${health}%`)}
   function restoreHealth(){setHealth(100)}
   function takeLightningHit(source,respawn=cloudRespawn){if(Date.now()<lightningHitUntil)return;lightningHitUntil=Date.now()+1100;setHealth(health-50);if(health===0){respawn(`${source} overwhelms you`)}else showToast({name:`${source} — 50% health lost`,color:'#ffd36c'})}
   function cloudRespawn(message){restoreHealth();player.x=cloudStart.x;player.y=cloudStart.y;showToast({name:message,color:'#dff8ff'})}
   function tornadoRespawn(message){let lastStorm=cloudIslandPosition(cloudIslands.find(c=>c.x===4750));restoreHealth();player.x=lastStorm.x;player.y=lastStorm.y;showToast({name:`${message} — returned to the last storm cloud`,color:'#dff8ff'})}
+  function healthRegenTick(){if(health<100&&Date.now()>=healthRegenAt){setHealth(health+1);healthRegenAt=Date.now()+300}requestAnimationFrame(healthRegenTick)}requestAnimationFrame(healthRegenTick);
   const biomeBeforeCloud=currentBiome;currentBiome=function(){return inCloud?biomes.find(b=>b.id==='clouds'):biomeBeforeCloud()};
   const blockedBeforeCloud=blocked;blocked=function(x,y){return inCloud?false:blockedBeforeCloud(x,y)};
   const screenXBeforeCloud=screenX,screenYBeforeCloud=screenY;screenX=function(x){return inCloud?x-cloudCamera.x:screenXBeforeCloud(x)};screenY=function(y){return inCloud?y-cloudCamera.y:screenYBeforeCloud(y)};
