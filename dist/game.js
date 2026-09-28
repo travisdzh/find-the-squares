@@ -474,5 +474,26 @@ const centennialBait={x:3820,y:600},finalObbyStart={x:3660,y:600},finalRoom={x:5
   const developerBeforeSavannah=developerTeleport;developerTeleport=function(choice){let key=choice.toLowerCase().trim();if(key==='savannah'){inOcean=false;inFactory=false;inIce=false;inAbyss=false;inBasement=false;inPlinko=false;inMoon=false;inMoonBase=false;inVoid=false;inMushroom=false;inCyber=false;inNull=false;inCloud=false;inWasteland=false;inReactor=false;enterSavannah();return}if(inSavannah)leaveSavannah();developerBeforeSavannah(choice)};
   $('#developerButton').onclick=()=>{let pass=window.prompt('DEVELOPER VERIFICATION: enter password');if(pass!=='TurlyCosmosX'){showToast({name:'Developer access denied',color:'#ff7580'});return}let choice=window.prompt('DEVELOPER PANEL\nEnter a biome: forest, desert, mountain, caves, volcano, swamp, taiga, jungle, ocean, factory, ice, abyss, basement, plinko, moon, moonbase, void, mushroom, cyber, clouds, wasteland, reactor, savannah');if(choice)developerTeleport(choice)};
   $('#confirmReset').addEventListener('click',()=>{if(inSavannah)leaveSavannah();bears.forEach(b=>{b.x=b.homeX;b.y=b.homeY})});
+
+  // Savannah owns its movement state.  It must not inherit the mainland loop's
+  // 9600px bounds: that loop was the source of the "stuck" Savannah player.
+  const savannahKeys={};let savannahControl=null,savannahMoveAt=0;
+  window.addEventListener('keydown',e=>{if(inSavannah){savannahKeys[e.code]=true;if(['KeyW','KeyA','KeyS','KeyD','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.code))e.preventDefault()}},true);
+  window.addEventListener('keyup',e=>{savannahKeys[e.code]=false},true);
+  const savannahEnterBeforeControl=enterSavannah,savannahLeaveBeforeControl=leaveSavannah;
+  enterSavannah=function(){savannahEnterBeforeControl();savannahControl={x:player.x,y:player.y};};
+  leaveSavannah=function(){savannahControl=null;savannahLeaveBeforeControl()};
+  function savannahMovement(t){
+    let dt=Math.min(.035,(t-savannahMoveAt)/1000||.016);savannahMoveAt=t;
+    if(inSavannah&&backdrop.hidden&&confirm.hidden&&homeBackdrop.hidden){
+      if(!savannahControl||Math.hypot(player.x-savannahControl.x,player.y-savannahControl.y)>120)savannahControl={x:player.x,y:player.y};
+      let dx=(savannahKeys.KeyD||savannahKeys.ArrowRight||touch.right?1:0)-(savannahKeys.KeyA||savannahKeys.ArrowLeft||touch.left?1:0);
+      let dy=(savannahKeys.KeyS||savannahKeys.ArrowDown||touch.down?1:0)-(savannahKeys.KeyW||savannahKeys.ArrowUp||touch.up?1:0);
+      if(dx||dy){let n=Math.hypot(dx,dy),step=270*dt;savannahControl.x=Math.max(25,Math.min(SAVANNAH_W-25,savannahControl.x+dx/n*step));savannahControl.y=Math.max(25,Math.min(SAVANNAH_H-25,savannahControl.y+dy/n*step))}
+      player.x=savannahControl.x;player.y=savannahControl.y;syncSavannahCamera();syncPlayerSprite();
+    }else if(!inSavannah)savannahControl=null;
+    requestAnimationFrame(savannahMovement)
+  }
+  requestAnimationFrame(savannahMovement);
   updateUI();
 })();
