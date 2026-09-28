@@ -438,7 +438,7 @@ const centennialBait={x:3820,y:600},finalObbyStart={x:3660,y:600},finalRoom={x:5
   $('#confirmReset').addEventListener('click',()=>{inReactor=false;factoryPower=[false,false,false];reactorSwitches=[false,false,false];reactorShutdown=false;syncReactorSquare();save()});
   // Golden Savannah — the first biome with living threats.
   const SAVANNAH_W=2600,SAVANNAH_H=2100,savannahPortal={x:2070,y:620,r:58},savannahReturn={x:210,y:1740,r:65},savannahStart={x:400,y:1700};
-  let inSavannah=false,savannahCamera={x:0,y:0},savannahAt=0,bearHitUntil=0;
+  let inSavannah=false,savannahCamera={x:0,y:0},savannahAt=0,bearHitUntil=0,savannahMainDriven=false;
   const bears=[{x:720,y:1480,homeX:720,homeY:1480},{x:1120,y:700,homeX:1120,homeY:700},{x:1680,y:1460,homeX:1680,homeY:1460},{x:2100,y:580,homeX:2100,homeY:580},{x:2220,y:1250,homeX:2220,homeY:1250},{x:1980,y:1780,homeX:1980,homeY:1780},{x:2290,y:1660,homeX:2290,homeY:1660},{x:2140,y:1840,homeX:2140,homeY:1840}];
   biomes.push({id:'savannah',name:'Golden Savannah',range:null,base:'#b99a4d',dark:'#6f5827',accent:'#e7cf6f'});
   [['Acacia Square',620,520,'Look under the flat crown of an old acacia.','#f4dc83','Medium'],['Termite Square',1460,1760,'A tall termite mound hides a warm-colored square.','#d89159','Medium'],['Liongrass Square',980,1080,'Watch the grass where the wind bends around the rocks.','#d1ff80','Hard'],['Waterhole Square',1780,520,'Bears patrol the quiet waterhole.','#7fd5e5','Hard'],['Baobab Square',2320,920,'A giant baobab keeps a dangerous secret.','#c89768','Hard'],['Grizzly Square',2180,1710,'Enter the bear-filled clearing at the far end of the savannah.','#b88758','Insane']].forEach(([name,x,y,hint,color,tier])=>squares.push({id:`sq-${squares.length}`,biome:'savannah',name,x,y,homeX:x,homeY:y,hint,color,tier}));
@@ -452,7 +452,7 @@ const centennialBait={x:3820,y:600},finalObbyStart={x:3660,y:600},finalRoom={x:5
     let now=Date.now(),dt=Math.min(.04,(now-savannahAt)/1000||0);savannahAt=now;
     if(backdrop.hidden&&confirm.hidden&&homeBackdrop.hidden){
       if(!inSavannah&&!inOcean&&!inFactory&&!inIce&&!inAbyss&&!inBasement&&!inPlinko&&!inMoon&&!inMoonBase&&!inVoid&&!inMushroom&&!inCyber&&!inNull&&!inWasteland&&!inReactor&&currentBiome().id==='desert'&&Math.hypot(player.x-savannahPortal.x,player.y-savannahPortal.y)<savannahPortal.r){inSavannah=true;restoreHealth();player.x=savannahStart.x;player.y=savannahStart.y;syncSavannahCamera();showToast({name:'The dry grass portal opens into the Golden Savannah',color:'#f6d986'})}
-      if(inSavannah){
+      if(inSavannah&&!savannahMainDriven){
         let dx=(keys.d||keys.arrowright||touch.right?1:0)-(keys.a||keys.arrowleft||touch.left?1:0),dy=(keys.s||keys.arrowdown||touch.down?1:0)-(keys.w||keys.arrowup||touch.up?1:0);
         if(dx||dy){let n=Math.hypot(dx,dy);player.x+=dx/n*player.speed*dt;player.y+=dy/n*player.speed*dt}
         player.x=Math.max(35,Math.min(SAVANNAH_W-35,player.x));player.y=Math.max(35,Math.min(SAVANNAH_H-35,player.y));
@@ -471,6 +471,22 @@ const centennialBait={x:3820,y:600},finalObbyStart={x:3660,y:600},finalRoom={x:5
   const mapBeforeSavannah=drawActiveMap;drawActiveMap=function(){if(!inSavannah)return mapBeforeSavannah();let mw=mapCanvas.width,mh=mapCanvas.height,x0=15,y0=43,ww=mw-30,hh=mh-58,toX=x=>x0+x/SAVANNAH_W*ww,toY=y=>y0+y/SAVANNAH_H*hh;mapCtx.fillStyle='#8b7434';mapCtx.fillRect(0,0,mw,mh);mapCtx.fillStyle='#c4a84f';mapCtx.fillRect(x0,y0,ww,hh);mapCtx.fillStyle='#6da9b5';mapCtx.beginPath();mapCtx.ellipse(toX(1780),toY(510),50,20,0,0,7);mapCtx.fill();bears.forEach(b=>{mapCtx.fillStyle='#6b402c';mapCtx.beginPath();mapCtx.arc(toX(b.x),toY(b.y),4,0,7);mapCtx.fill()});mapCtx.fillStyle='#fff0a8';mapCtx.font='900 18px Nunito';mapCtx.textAlign='center';mapCtx.fillText('GOLDEN SAVANNAH',mw/2,28);mapCtx.fillStyle='#ffdf55';mapCtx.beginPath();mapCtx.arc(toX(player.x),toY(player.y),7,0,7);mapCtx.fill();mapCtx.fillStyle='#fff2c2';mapCtx.font='500 10px DM Mono';mapCtx.textAlign='left';mapCtx.fillText('BROWN DOTS = BEARS',14,mh-9)};
   const developerBeforeSavannah=developerTeleport;developerTeleport=function(choice){let key=choice.toLowerCase().trim();if(key==='savannah'){inOcean=false;inFactory=false;inIce=false;inAbyss=false;inBasement=false;inPlinko=false;inMoon=false;inMoonBase=false;inVoid=false;inMushroom=false;inCyber=false;inNull=false;inCloud=false;inWasteland=false;inReactor=false;inSavannah=true;restoreHealth();player.x=savannahStart.x;player.y=savannahStart.y;syncSavannahCamera();showToast({name:'Developer teleport: savannah',color:'#f6d986'});return}inSavannah=false;developerBeforeSavannah(choice)};
   $('#developerButton').onclick=()=>{let pass=window.prompt('DEVELOPER VERIFICATION: enter password');if(pass!=='TurlyCosmosX'){showToast({name:'Developer access denied',color:'#ff7580'});return}let choice=window.prompt('DEVELOPER PANEL\nEnter a biome: forest, desert, mountain, caves, volcano, swamp, taiga, jungle, ocean, factory, ice, abyss, basement, plinko, moon, moonbase, void, mushroom, cyber, clouds, wasteland, reactor, savannah');if(choice)developerTeleport(choice)};
-  $('#confirmReset').addEventListener('click',()=>{inSavannah=false;bears.forEach(b=>{b.x=b.homeX;b.y=b.homeY})});
+  $('#confirmReset').addEventListener('click',()=>{inSavannah=false;savannahMainDriven=false;bears.forEach(b=>{b.x=b.homeX;b.y=b.homeY})});
+  // Run Savannah through the primary frame loop, just like the other dimensions.
+  const mainLoopBeforeSavannah=loop;
+  loop=function(t){
+    if(!inSavannah){mainLoopBeforeSavannah(t);return}
+    savannahMainDriven=true;
+    let dt=Math.min(.035,(t-last)/1000||0);last=t;
+    if(backdrop.hidden&&confirm.hidden&&homeBackdrop.hidden){
+      let dx=(keys.d||keys.arrowright||touch.right?1:0)-(keys.a||keys.arrowleft||touch.left?1:0),dy=(keys.s||keys.arrowdown||touch.down?1:0)-(keys.w||keys.arrowup||touch.up?1:0);
+      if(dx||dy){let n=Math.hypot(dx,dy);player.x+=dx/n*player.speed*dt;player.y+=dy/n*player.speed*dt}
+      player.x=Math.max(35,Math.min(SAVANNAH_W-35,player.x));player.y=Math.max(35,Math.min(SAVANNAH_H-35,player.y));
+      if(Math.hypot(player.x-savannahReturn.x,player.y-savannahReturn.y)<savannahReturn.r){inSavannah=false;savannahMainDriven=false;restoreHealth();player.x=savannahPortal.x-105;player.y=savannahPortal.y;showToast({name:'You return to the Sunkissed Dunes',color:'#f6d986'})}
+      else bears.forEach(b=>{let bx=player.x-b.x,by=player.y-b.y,d=Math.hypot(bx,by),chasing=d<390;if(chasing&&d>42){b.x+=bx/d*165*dt;b.y+=by/d*165*dt}if(chasing&&d<58)bearHit()});
+      syncSavannahCamera();
+    }
+    let rect=canvas.getBoundingClientRect();drawScene(rect.width,rect.height);let biome=currentBiome();$('#biomePill').textContent=biome.name;$('#biomePill').style.background=biome.dark+'e6';requestAnimationFrame(loop)
+  };
   updateUI();
 })();
