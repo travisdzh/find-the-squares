@@ -464,7 +464,7 @@ const centennialBait={x:3820,y:600},finalObbyStart={x:3660,y:600},finalRoom={x:5
   $('#skinsButton').onclick=()=>showHomePanel('skins');
   const updateUIBeforeSkins=updateUI;updateUI=function(){updateUIBeforeSkins();renderSkins();applySkin()};
   let completionTrailAt=0,completionTrailPosition=null;
-  function leaveCompletionTrail(){if(selectedSkin!=='completionist'||homeBackdrop.hidden===false||playerSprite.hidden)return;let x=screenX(player.x),y=screenY(player.y);if(completionTrailPosition&&Math.hypot(x-completionTrailPosition.x,y-completionTrailPosition.y)<17)return;if(Date.now()-completionTrailAt<85)return;completionTrailAt=Date.now();completionTrailPosition={x,y};let dot=document.createElement('i');dot.className='completion-trail-square';dot.style.left=`${x}px`;dot.style.top=`${y+15}px`;playerSprite.parentElement.appendChild(dot);setTimeout(()=>dot.remove(),700)}
+  function leaveCompletionTrail(){if(selectedSkin!=='completionist'||homeBackdrop.hidden===false||playerSprite.hidden)return;let worldX=player.x,worldY=player.y;if(completionTrailPosition&&Math.hypot(worldX-completionTrailPosition.x,worldY-completionTrailPosition.y)<17)return;if(Date.now()-completionTrailAt<85)return;completionTrailAt=Date.now();completionTrailPosition={x:worldX,y:worldY};let dot=document.createElement('i');dot.className='completion-trail-square';dot.style.left=`${screenX(worldX)}px`;dot.style.top=`${screenY(worldY)+15}px`;playerSprite.parentElement.appendChild(dot);setTimeout(()=>dot.remove(),700)}
   const syncPlayerSpriteBeforeTrail=syncPlayerSprite;syncPlayerSprite=function(){syncPlayerSpriteBeforeTrail();leaveCompletionTrail()};
   applySkin();
   updateUI();
