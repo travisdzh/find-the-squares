@@ -512,6 +512,8 @@ const centennialBait={x:3820,y:600},finalObbyStart={x:3660,y:600},finalRoom={x:5
   // Keep the Void timer from replacing its immutable portal object; an uncaught timer error can otherwise interrupt unrelated input updates.
   blackHole.next=Number.MAX_SAFE_INTEGER;let reliableBlackHoleAt=Date.now()+15000;
   function reliableBlackHoleCycle(){let now=Date.now(),mainland=!inSavannah&&!inOcean&&!inFactory&&!inIce&&!inAbyss&&!inBasement&&!inPlinko&&!inMoon&&!inMoonBase&&!inVoid&&!inMushroom&&!inCyber&&!inNull&&!inCloud&&!inWasteland&&!inReactor;if(blackHole.active&&now>=blackHole.expires){blackHole.active=false;reliableBlackHoleAt=now+15000}if(mainland&&!blackHole.active&&now>=reliableBlackHoleAt)Object.assign(blackHole,{active:true,x:160+Math.random()*(W-320),y:160+Math.random()*(H-320),expires:now+15000});requestAnimationFrame(reliableBlackHoleCycle)}requestAnimationFrame(reliableBlackHoleCycle);
+  // Savannah is retired: remove its content and any saved discoveries as though it never shipped.
+  let retiredSavannah=squares.filter(s=>s.biome==='savannah');retiredSavannah.forEach(s=>delete found[s.id]);squares.splice(0,squares.length,...squares.filter(s=>s.biome!=='savannah'));let retiredBiome=biomes.findIndex(b=>b.id==='savannah');if(retiredBiome>=0)biomes.splice(retiredBiome,1);inSavannah=false;savannahPortal.x=-999;savannahPortal.y=-999;enterSavannah=function(){showToast({name:'Golden Savannah is no longer available',color:'#ff7580'})};save();
   applySkin();
   updateUI();
 })();
