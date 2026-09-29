@@ -450,18 +450,22 @@ const centennialBait={x:3820,y:600},finalObbyStart={x:3660,y:600},finalRoom={x:5
     {id:'hazmat',name:'Hazmat',rarity:'Epic',color:'#d7e84e',quest:'Find every Wasteland square.',biomes:['wasteland'],special:'hazmat'},
     {id:'void',name:'Void',rarity:'Mythic',color:'#9f63ec',quest:'Find every Void square.',biomes:['void'],special:'void'},
     {id:'glitched',name:'Glitched',rarity:'Epic',color:'#72e8d4',quest:'Find every Cyberspace square.',biomes:['cyber'],special:'glitched'},
+    {id:'completionist',name:'Completionist',rarity:'Legendary',color:'#f7f7f7',quest:'Find every square in the game.',all:true,special:'completionist'},
     {id:'alpha',name:'Alpha Tester',rarity:'Limited',color:'#f5f0ff',quest:'Free for everyone during the alpha.',special:'alpha'}
   ];
   const skinRarity={Common:'#b7c3c6',Rare:'#6dc5ff',Epic:'#c887ff',Mythic:'#ffb64c',Legendary:'#ffdd62',Limited:'#ff7ec6'};
   let selectedSkin=localStorage.getItem('find-the-squares-skin')||'aqua';
-  function skinProgress(s){if(s.need)return `${count()} / ${s.need}`;if(s.biomes){let targets=squares.filter(q=>s.biomes.includes(q.biome));return `${targets.filter(q=>found[q.id]).length} / ${targets.length}`}return 'Unlocked'}
-  function skinUnlocked(s){return s.id==='aqua'||s.id==='alpha'||(s.need?count()>=s.need:s.biomes?squares.filter(q=>s.biomes.includes(q.biome)).every(q=>found[q.id]):true)}
+  function skinProgress(s){if(s.need)return `${count()} / ${s.need}`;if(s.all)return `${count()} / ${squares.length}`;if(s.biomes){let targets=squares.filter(q=>s.biomes.includes(q.biome));return `${targets.filter(q=>found[q.id]).length} / ${targets.length}`}return 'Unlocked'}
+  function skinUnlocked(s){return s.id==='aqua'||s.id==='alpha'||(s.need?count()>=s.need:s.all?count()===squares.length:s.biomes?squares.filter(q=>s.biomes.includes(q.biome)).every(q=>found[q.id]):true)}
   function applySkin(){let skin=skins.find(s=>s.id===selectedSkin)||skins[0];if(!skinUnlocked(skin)){selectedSkin='aqua';skin=skins[0];localStorage.setItem('find-the-squares-skin',selectedSkin)}let color=skin.special==='camo'?currentBiome().base:skin.color;playerColor=color;playerSprite.style.setProperty('--player-colour',color);playerSprite.className=`player-sprite skin-${skin.id}`;playerSprite.setAttribute('aria-label',`${skin.name} player character`)}
   function renderSkins(){if(!skinsGrid)return;skinsGrid.innerHTML=skins.map(s=>{let unlocked=skinUnlocked(s),selected=s.id===selectedSkin,rarity=skinRarity[s.rarity];return `<article class="skin-card ${unlocked?'':'locked'} ${selected?'selected':''}"><div class="skin-preview ${s.special||''}" style="--skin:${s.color}"></div><h3>${s.name}</h3><span class="rarity" style="background:${rarity}">${s.rarity}</span><p>${s.quest}</p><p>${unlocked?'Unlocked':skinProgress(s)}</p><button data-skin="${s.id}" ${unlocked?'':'disabled'}>${selected?'Equipped':unlocked?'Equip':'Locked'}</button></article>`}).join('');skinsGrid.querySelectorAll('[data-skin]').forEach(b=>b.onclick=()=>{let s=skins.find(x=>x.id===b.dataset.skin);if(!skinUnlocked(s))return;selectedSkin=s.id;localStorage.setItem('find-the-squares-skin',selectedSkin);applySkin();renderSkins()})}
   const syncPlayerSpriteBeforeSkins=syncPlayerSprite;syncPlayerSprite=function(){syncPlayerSpriteBeforeSkins();applySkin()};
   const showHomePanelBeforeSkins=showHomePanel;showHomePanel=function(panel){showHomePanelBeforeSkins(panel==='skins'?null:panel);skinsPanel.hidden=panel!=='skins';document.querySelector('.home-menu').hidden=Boolean(panel);if(panel==='skins'){renderSkins();$('#skinsTitle').focus()}};
   $('#skinsButton').onclick=()=>showHomePanel('skins');
   const updateUIBeforeSkins=updateUI;updateUI=function(){updateUIBeforeSkins();renderSkins();applySkin()};
+  let completionTrailAt=0,completionTrailPosition=null;
+  function leaveCompletionTrail(){if(selectedSkin!=='completionist'||homeBackdrop.hidden===false||playerSprite.hidden)return;let x=screenX(player.x),y=screenY(player.y);if(completionTrailPosition&&Math.hypot(x-completionTrailPosition.x,y-completionTrailPosition.y)<17)return;if(Date.now()-completionTrailAt<85)return;completionTrailAt=Date.now();completionTrailPosition={x,y};let dot=document.createElement('i');dot.className='completion-trail-square';dot.style.left=`${x}px`;dot.style.top=`${y+15}px`;playerSprite.parentElement.appendChild(dot);setTimeout(()=>dot.remove(),700)}
+  const syncPlayerSpriteBeforeTrail=syncPlayerSprite;syncPlayerSprite=function(){syncPlayerSpriteBeforeTrail();leaveCompletionTrail()};
   applySkin();
   updateUI();
 })();
