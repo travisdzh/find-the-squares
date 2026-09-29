@@ -504,6 +504,9 @@ const centennialBait={x:3820,y:600},finalObbyStart={x:3660,y:600},finalRoom={x:5
   const mapBeforeSavannah=drawActiveMap;drawActiveMap=function(){if(!inSavannah)return mapBeforeSavannah();let mw=mapCanvas.width,mh=mapCanvas.height,x0=15,y0=43,ww=mw-30,hh=mh-58,toX=x=>x0+x/SAVANNAH_W*ww,toY=y=>y0+y/SAVANNAH_H*hh;mapCtx.fillStyle='#8b7434';mapCtx.fillRect(0,0,mw,mh);mapCtx.fillStyle='#c4a84f';mapCtx.fillRect(x0,y0,ww,hh);mapCtx.fillStyle='#6da9b5';mapCtx.beginPath();mapCtx.ellipse(toX(1830),toY(520),50,20,0,0,7);mapCtx.fill();mapCtx.fillStyle='#fff0a8';mapCtx.font='900 18px Nunito';mapCtx.textAlign='center';mapCtx.fillText('GOLDEN SAVANNAH',mw/2,28);mapCtx.fillStyle='#ffdf55';mapCtx.beginPath();mapCtx.arc(toX(player.x),toY(player.y),7,0,7);mapCtx.fill()};
   const developerBeforeSavannah=developerTeleport;developerTeleport=function(choice){if(choice.toLowerCase().trim()==='savannah'){enterSavannah();return}if(inSavannah)leaveSavannah();developerBeforeSavannah(choice)};
   $('#confirmReset').addEventListener('click',()=>{if(inSavannah)leaveSavannah()});
+  let savannahMoveAt=0;
+  function moveSavannah(t){let dt=Math.min(.035,(t-savannahMoveAt)/1000||.016);savannahMoveAt=t;if(inSavannah&&backdrop.hidden&&confirm.hidden&&homeBackdrop.hidden){let dx=(keys.d||keys.arrowright||touch.right?1:0)-(keys.a||keys.arrowleft||touch.left?1:0),dy=(keys.s||keys.arrowdown||touch.down?1:0)-(keys.w||keys.arrowup||touch.up?1:0);if(dx||dy){let length=Math.hypot(dx,dy),step=player.speed*dt;player.x=Math.max(25,Math.min(SAVANNAH_W-25,player.x+dx/length*step));player.y=Math.max(25,Math.min(SAVANNAH_H-25,player.y+dy/length*step))}syncPlayerSprite()}requestAnimationFrame(moveSavannah)}
+  requestAnimationFrame(moveSavannah);
   applySkin();
   updateUI();
 })();
