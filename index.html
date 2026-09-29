@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="tiers.css" />
     <link rel="stylesheet" href="map.css" />
     <link rel="stylesheet" href="home.css?v=player-fix" />
+    <link rel="stylesheet" href="skins.css?v=skins-v1" />
+    <link rel="stylesheet" href="skin-effects.css?v=skins-v1" />
   </head>
   <body>
     <main class="game-shell">
@@ -47,19 +49,23 @@
         <p class="home-copy">Explore every biome. Find every secret.</p>
         <nav class="home-menu" aria-label="Game menu">
           <button class="home-play" id="playButton">Play</button>
+          <button id="skinsButton">Skins</button>
           <button id="settingsButton">Settings</button>
           <button id="changelogButton">Changelog</button>
         </nav>
         <section class="home-panel" id="settingsPanel" hidden aria-labelledby="settingsTitle">
           <button class="panel-back" data-home-back aria-label="Back to home menu">← Back</button>
           <h2 id="settingsTitle">Settings</h2>
-          <p>Player colour</p>
-          <div class="color-picker" role="group" aria-label="Player colour">
-            <button data-player-color="#80dbdc" aria-label="Aqua player colour"></button><button data-player-color="#ff8ca3" aria-label="Pink player colour"></button><button data-player-color="#a9d978" aria-label="Green player colour"></button><button data-player-color="#a98dff" aria-label="Purple player colour"></button><button data-player-color="#ffb84d" aria-label="Gold player colour"></button>
-          </div>
+          <p>Choose and unlock player looks in the Skins tab.</p>
           <button class="home-reset" id="homeResetButton">Reset progress</button>
           <button class="home-reset" id="developerButton">Developer panel</button>
           <div class="settings-secret"><p>There must be something further down…</p><button id="settingsSquare" aria-label="Collect Settings Square">◆</button></div>
+        </section>
+        <section class="home-panel skins-panel" id="skinsPanel" hidden aria-labelledby="skinsTitle">
+          <button class="panel-back" data-home-back aria-label="Back to home menu">← Back</button>
+          <h2 id="skinsTitle" tabindex="-1">Skins</h2>
+          <p>Complete quests to unlock new looks.</p>
+          <div id="skinsGrid" class="skins-grid" aria-live="polite"></div>
         </section>
         <section class="home-panel changelog-panel" id="changelogPanel" hidden aria-labelledby="changelogTitle">
           <button class="panel-back" data-home-back aria-label="Back to home menu">← Back</button>
@@ -105,6 +111,6 @@
     <div class="modal-backdrop" id="confirmBackdrop" hidden>
       <section class="confirm-modal" role="alertdialog" aria-modal="true" aria-labelledby="confirmTitle"><p class="eyebrow">ARE YOU SURE?</p><h2 id="confirmTitle">Start a fresh collection?</h2><p>This removes all found squares from this device.</p><div><button id="cancelReset" class="secondary">Keep progress</button><button id="confirmReset" class="danger">Reset collection</button></div></section>
     </div>
-<script src="game.js?v=remove-savannah-v13"></script>
+<script src="game.js?v=skins-v1"></script>
   </body>
 </html>
