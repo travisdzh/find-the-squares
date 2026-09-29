@@ -469,7 +469,17 @@ const centennialBait={x:3820,y:600},finalObbyStart={x:3660,y:600},finalRoom={x:5
   const syncPlayerSpriteBeforeTrail=syncPlayerSprite;syncPlayerSprite=function(){syncPlayerSpriteBeforeTrail();syncCompletionTrails();leaveCompletionTrail()};
   // Void entrances follow the Plinko rhythm: five seconds open, then twenty-five seconds away.
   blackHole.next=0;
-  function voidEntranceCycle(){let now=Date.now(),mainWorld=!inOcean&&!inFactory&&!inIce&&!inAbyss&&!inBasement&&!inPlinko&&!inMoon&&!inMoonBase&&!inVoid&&!inMushroom&&!inCyber&&!inNull&&!inCloud&&!inWasteland&&!inReactor;if(mainWorld&&!blackHole.testingPlaced){blackHole.active=true;blackHole.x=Math.max(80,Math.min(W-80,player.x+110));blackHole.y=Math.max(110,Math.min(H-110,player.y));blackHole.expires=now+600000;blackHole.testingPlaced=true}if(mainWorld&&blackHole.active&&Math.hypot(player.x-blackHole.x,player.y-blackHole.y)<85){inVoid=true;player.x=voidHub.x+115;player.y=voidHub.y;blackHole.active=false;blackHole.testingPlaced=false;showToast({name:'Test portal: entering the Void',color:'#c79cff'})}else if(!mainWorld)blackHole.testingPlaced=false;requestAnimationFrame(voidEntranceCycle)}
+  function voidEntranceCycle(){
+    let now=Date.now(),mainWorld=!inOcean&&!inFactory&&!inIce&&!inAbyss&&!inBasement&&!inPlinko&&!inMoon&&!inMoonBase&&!inVoid&&!inMushroom&&!inCyber&&!inNull&&!inCloud&&!inWasteland&&!inReactor;
+    if(mainWorld&&!blackHole.testingPlaced){blackHole.active=true;blackHole.x=Math.max(80,Math.min(W-80,player.x+110));blackHole.y=Math.max(110,Math.min(H-110,player.y));blackHole.expires=now+600000;blackHole.testingPlaced=true}
+    if(mainWorld&&blackHole.active&&Math.hypot(player.x-blackHole.x,player.y-blackHole.y)<85){inVoid=true;player.x=voidHub.x+115;player.y=voidHub.y;blackHole.active=false;blackHole.testingPlaced=false;showToast({name:'Test portal: entering the Void',color:'#c79cff'})}
+    else if(!mainWorld)blackHole.testingPlaced=false;
+    if(inVoid){
+      if(Math.hypot(player.x-voidExit.x,player.y-voidExit.y)<75){inVoid=false;player.x=330;player.y=900;showToast({name:'You escape the Void',color:'#c79cff'})}
+      else {let warp=voidTeleporters.find(p=>now>voidTeleCooldown&&Math.hypot(player.x-p.x,player.y-p.y)<58);if(warp){let destinations=[{x:520,y:350},{x:850,y:850},{x:1270,y:310},{x:1520,y:760},{x:1900,y:1120}],d=destinations[Math.floor(Math.random()*destinations.length)];player.x=d.x;player.y=d.y;voidTeleCooldown=now+1600;showToast({name:'The Void warps you somewhere else',color:'#c79cff'})}voidShardLocations.forEach((p,i)=>{if(!voidShards[i]&&Math.hypot(player.x-p.x,player.y-p.y)<55){voidShards[i]=true;save();showToast({name:`Corrupted shard found (${voidShards.filter(Boolean).length}/10)`,color:'#ff5ee2'});if(voidShards.every(Boolean)){let corrupt=squares.find(s=>s.name==='Corrupted Square');corrupt.x=player.x+70;corrupt.y=player.y;showToast({name:'All shards resonate — Corrupted Square appears beside you',color:'#ff5ee2'})}}})}
+    }
+    requestAnimationFrame(voidEntranceCycle)
+  }
   requestAnimationFrame(voidEntranceCycle);
   applySkin();
   updateUI();
