@@ -469,7 +469,7 @@ const centennialBait={x:3820,y:600},finalObbyStart={x:3660,y:600},finalRoom={x:5
   const syncPlayerSpriteBeforeTrail=syncPlayerSprite;syncPlayerSprite=function(){syncPlayerSpriteBeforeTrail();syncCompletionTrails();leaveCompletionTrail()};
   // Void entrances follow the Plinko rhythm: five seconds open, then twenty-five seconds away.
   blackHole.next=0;
-  function voidEntranceCycle(){let now=Date.now(),mainWorld=!inOcean&&!inFactory&&!inIce&&!inAbyss&&!inBasement&&!inPlinko&&!inMoon&&!inMoonBase&&!inVoid&&!inMushroom&&!inCyber&&!inNull&&!inCloud&&!inWasteland&&!inReactor;if(mainWorld&&!blackHole.testingPlaced){blackHole.active=true;blackHole.x=Math.max(80,Math.min(W-80,player.x+110));blackHole.y=Math.max(110,Math.min(H-110,player.y));blackHole.expires=now+600000;blackHole.testingPlaced=true}else if(!mainWorld)blackHole.testingPlaced=false;requestAnimationFrame(voidEntranceCycle)}
+  function voidEntranceCycle(){let now=Date.now(),mainWorld=!inOcean&&!inFactory&&!inIce&&!inAbyss&&!inBasement&&!inPlinko&&!inMoon&&!inMoonBase&&!inVoid&&!inMushroom&&!inCyber&&!inNull&&!inCloud&&!inWasteland&&!inReactor;if(mainWorld&&!blackHole.testingPlaced){blackHole.active=true;blackHole.x=Math.max(80,Math.min(W-80,player.x+110));blackHole.y=Math.max(110,Math.min(H-110,player.y));blackHole.expires=now+600000;blackHole.testingPlaced=true}if(mainWorld&&blackHole.active&&Math.hypot(player.x-blackHole.x,player.y-blackHole.y)<85){inVoid=true;player.x=voidHub.x+115;player.y=voidHub.y;blackHole.active=false;blackHole.testingPlaced=false;showToast({name:'Test portal: entering the Void',color:'#c79cff'})}else if(!mainWorld)blackHole.testingPlaced=false;requestAnimationFrame(voidEntranceCycle)}
   requestAnimationFrame(voidEntranceCycle);
   applySkin();
   updateUI();
