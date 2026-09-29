@@ -472,6 +472,7 @@ const centennialBait={x:3820,y:600},finalObbyStart={x:3660,y:600},finalRoom={x:5
   function voidEntranceCycle(){
     let now=Date.now(),mainWorld=!inOcean&&!inFactory&&!inIce&&!inAbyss&&!inBasement&&!inPlinko&&!inMoon&&!inMoonBase&&!inVoid&&!inMushroom&&!inCyber&&!inNull&&!inCloud&&!inWasteland&&!inReactor;
     if(mainWorld&&blackHole.active&&!blackHole.voidCycle){let candidate,tries=0;do{candidate={x:80+Math.random()*(W-160),y:110+Math.random()*(H-220)};tries++}while(tries<80&&colliders.some(c=>c.r?Math.hypot(candidate.x-c.x,candidate.y-c.y)<c.r+80:candidate.x>c.x-80&&candidate.x<c.x+c.w+80&&candidate.y>c.y-80&&candidate.y<c.y+c.h+80));blackHole.x=candidate.x;blackHole.y=candidate.y;blackHole.expires=now+15000;blackHole.next=now+30000;blackHole.voidCycle=true}
+    if(mainWorld&&blackHole.active&&Math.hypot(player.x-blackHole.x,player.y-blackHole.y)<78){inVoid=true;player.x=voidHub.x+115;player.y=voidHub.y;blackHole.active=false;blackHole.voidCycle=false;showToast({name:'The black hole tears open a path to the Void',color:'#c79cff'})}
     if(!blackHole.active)blackHole.voidCycle=false;
     if(inVoid){
       if(Math.hypot(player.x-voidExit.x,player.y-voidExit.y)<75){inVoid=false;player.x=330;player.y=900;showToast({name:'You escape the Void',color:'#c79cff'})}
