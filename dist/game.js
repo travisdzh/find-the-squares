@@ -436,5 +436,32 @@ const centennialBait={x:3820,y:600},finalObbyStart={x:3660,y:600},finalRoom={x:5
   const developerBeforeWaste=developerTeleport;developerTeleport=function(choice){let key=choice.toLowerCase().trim();if(key==='reactor'){inWasteland=false;inReactor=true;syncReactorSquare();restoreHealth();player.x=reactorEntry.x;player.y=reactorEntry.y-95;showToast({name:'Developer teleport: reactor',color:'#dfff9b'});return}if(key==='wasteland'||key==='waste'){inOcean=false;inFactory=false;inIce=false;inAbyss=false;inBasement=false;inPlinko=false;inMoon=false;inMoonBase=false;inVoid=false;inMushroom=false;inCyber=false;inNull=false;inCloud=false;inReactor=false;syncReactorSquare();inWasteland=true;restoreHealth();player.x=wasteStart.x;player.y=wasteStart.y;showToast({name:'Developer teleport: wasteland',color:'#dfff9b'});return}inWasteland=false;inReactor=false;syncReactorSquare();developerBeforeWaste(choice)};
   $('#developerButton').onclick=()=>{let pass=window.prompt('DEVELOPER VERIFICATION: enter password');if(pass!=='TurlyCosmosX'){showToast({name:'Developer access denied',color:'#ff7580'});return}let choice=window.prompt('DEVELOPER PANEL\nEnter a biome: forest, desert, mountain, caves, volcano, swamp, taiga, jungle, ocean, factory, ice, abyss, basement, plinko, moon, moonbase, void, mushroom, cyber, clouds, wasteland, reactor');if(choice)developerTeleport(choice)};
   $('#confirmReset').addEventListener('click',()=>{inReactor=false;factoryPower=[false,false,false];reactorSwitches=[false,false,false];reactorShutdown=false;syncReactorSquare();save()});
+  // Unlockable character skins. Progress is private to this browser, like the catalog.
+  const skinsPanel=$('#skinsPanel'),skinsGrid=$('#skinsGrid');
+  const skins=[
+    {id:'aqua',name:'Aqua',rarity:'Common',color:'#80dbdc',quest:'Starter skin — always available.'},
+    {id:'red',name:'Red',rarity:'Common',color:'#ef6267',quest:'Collect 10 squares.',need:10},
+    {id:'green',name:'Green',rarity:'Common',color:'#8bdb78',quest:'Collect 25 squares.',need:25},
+    {id:'purple',name:'Purple',rarity:'Rare',color:'#a98dff',quest:'Collect 50 squares.',need:50},
+    {id:'pink',name:'Pink',rarity:'Epic',color:'#ff8ca3',quest:'Collect 75 squares.',need:75},
+    {id:'gold',name:'Gold',rarity:'Mythic',color:'#ffb84d',quest:'Collect 100 squares.',need:100},
+    {id:'camo',name:'Camo',rarity:'Epic',color:'#78945c',quest:'Find every mainland square.',biomes:['forest','desert','mountain','caves','volcano','swamp','taiga','jungle'],special:'camo'},
+    {id:'astronaut',name:'Astronaut',rarity:'Epic',color:'#dceafa',quest:'Find every Moon square.',biomes:['moon','moonbase'],special:'astronaut'},
+    {id:'hazmat',name:'Hazmat',rarity:'Epic',color:'#d7e84e',quest:'Find every Wasteland square.',biomes:['wasteland'],special:'hazmat'},
+    {id:'void',name:'Void',rarity:'Mythic',color:'#9f63ec',quest:'Find every Void square.',biomes:['void'],special:'void'},
+    {id:'glitched',name:'Glitched',rarity:'Epic',color:'#72e8d4',quest:'Find every Cyberspace square.',biomes:['cyber'],special:'glitched'},
+    {id:'alpha',name:'Alpha Tester',rarity:'Limited',color:'#f5f0ff',quest:'Free for everyone during the alpha.',special:'alpha'}
+  ];
+  const skinRarity={Common:'#b7c3c6',Rare:'#6dc5ff',Epic:'#c887ff',Mythic:'#ffb64c',Legendary:'#ffdd62',Limited:'#ff7ec6'};
+  let selectedSkin=localStorage.getItem('find-the-squares-skin')||'aqua';
+  function skinProgress(s){if(s.need)return `${count()} / ${s.need}`;if(s.biomes){let targets=squares.filter(q=>s.biomes.includes(q.biome));return `${targets.filter(q=>found[q.id]).length} / ${targets.length}`}return 'Unlocked'}
+  function skinUnlocked(s){return s.id==='aqua'||s.id==='alpha'||(s.need?count()>=s.need:s.biomes?squares.filter(q=>s.biomes.includes(q.biome)).every(q=>found[q.id]):true)}
+  function applySkin(){let skin=skins.find(s=>s.id===selectedSkin)||skins[0];if(!skinUnlocked(skin)){selectedSkin='aqua';skin=skins[0];localStorage.setItem('find-the-squares-skin',selectedSkin)}let color=skin.special==='camo'?currentBiome().base:skin.color;playerColor=color;playerSprite.style.setProperty('--player-colour',color);playerSprite.className=`player-sprite skin-${skin.id}`;playerSprite.setAttribute('aria-label',`${skin.name} player character`)}
+  function renderSkins(){if(!skinsGrid)return;skinsGrid.innerHTML=skins.map(s=>{let unlocked=skinUnlocked(s),selected=s.id===selectedSkin,rarity=skinRarity[s.rarity];return `<article class="skin-card ${unlocked?'':'locked'} ${selected?'selected':''}"><div class="skin-preview ${s.special||''}" style="--skin:${s.color}"></div><h3>${s.name}</h3><span class="rarity" style="background:${rarity}">${s.rarity}</span><p>${s.quest}</p><p>${unlocked?'Unlocked':skinProgress(s)}</p><button data-skin="${s.id}" ${unlocked?'':'disabled'}>${selected?'Equipped':unlocked?'Equip':'Locked'}</button></article>`}).join('');skinsGrid.querySelectorAll('[data-skin]').forEach(b=>b.onclick=()=>{let s=skins.find(x=>x.id===b.dataset.skin);if(!skinUnlocked(s))return;selectedSkin=s.id;localStorage.setItem('find-the-squares-skin',selectedSkin);applySkin();renderSkins()})}
+  const syncPlayerSpriteBeforeSkins=syncPlayerSprite;syncPlayerSprite=function(){syncPlayerSpriteBeforeSkins();applySkin()};
+  const showHomePanelBeforeSkins=showHomePanel;showHomePanel=function(panel){showHomePanelBeforeSkins(panel==='skins'?null:panel);skinsPanel.hidden=panel!=='skins';document.querySelector('.home-menu').hidden=Boolean(panel);if(panel==='skins'){renderSkins();$('#skinsTitle').focus()}};
+  $('#skinsButton').onclick=()=>showHomePanel('skins');
+  const updateUIBeforeSkins=updateUI;updateUI=function(){updateUIBeforeSkins();renderSkins();applySkin()};
+  applySkin();
   updateUI();
 })();
