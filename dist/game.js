@@ -463,9 +463,10 @@ const centennialBait={x:3820,y:600},finalObbyStart={x:3660,y:600},finalRoom={x:5
   const showHomePanelBeforeSkins=showHomePanel;showHomePanel=function(panel){showHomePanelBeforeSkins(panel==='skins'?null:panel);skinsPanel.hidden=panel!=='skins';document.querySelector('.home-menu').hidden=Boolean(panel);if(panel==='skins'){renderSkins();$('#skinsTitle').focus()}};
   $('#skinsButton').onclick=()=>showHomePanel('skins');
   const updateUIBeforeSkins=updateUI;updateUI=function(){updateUIBeforeSkins();renderSkins();applySkin()};
-  let completionTrailAt=0,completionTrailPosition=null;
-  function leaveCompletionTrail(){if(selectedSkin!=='completionist'||homeBackdrop.hidden===false||playerSprite.hidden)return;let worldX=player.x,worldY=player.y;if(completionTrailPosition&&Math.hypot(worldX-completionTrailPosition.x,worldY-completionTrailPosition.y)<17)return;if(Date.now()-completionTrailAt<85)return;completionTrailAt=Date.now();completionTrailPosition={x:worldX,y:worldY};let dot=document.createElement('i');dot.className='completion-trail-square';dot.style.left=`${screenX(worldX)}px`;dot.style.top=`${screenY(worldY)+15}px`;playerSprite.parentElement.appendChild(dot);setTimeout(()=>dot.remove(),700)}
-  const syncPlayerSpriteBeforeTrail=syncPlayerSprite;syncPlayerSprite=function(){syncPlayerSpriteBeforeTrail();leaveCompletionTrail()};
+  let completionTrailAt=0,completionTrailPosition=null,completionTrails=[];
+  function syncCompletionTrails(){completionTrails.forEach(t=>{t.dot.style.left=`${screenX(t.x)}px`;t.dot.style.top=`${screenY(t.y)+15}px`})}
+  function leaveCompletionTrail(){if(selectedSkin!=='completionist'||homeBackdrop.hidden===false||playerSprite.hidden)return;let worldX=player.x,worldY=player.y;if(completionTrailPosition&&Math.hypot(worldX-completionTrailPosition.x,worldY-completionTrailPosition.y)<17)return;if(Date.now()-completionTrailAt<85)return;completionTrailAt=Date.now();completionTrailPosition={x:worldX,y:worldY};let dot=document.createElement('i'),trail={dot,x:worldX,y:worldY};dot.className='completion-trail-square';playerSprite.parentElement.appendChild(dot);completionTrails.push(trail);syncCompletionTrails();setTimeout(()=>{dot.remove();completionTrails=completionTrails.filter(t=>t!==trail)},700)}
+  const syncPlayerSpriteBeforeTrail=syncPlayerSprite;syncPlayerSprite=function(){syncPlayerSpriteBeforeTrail();syncCompletionTrails();leaveCompletionTrail()};
   applySkin();
   updateUI();
 })();
