@@ -480,6 +480,10 @@ const centennialBait={x:3820,y:600},finalObbyStart={x:3660,y:600},finalRoom={x:5
     requestAnimationFrame(voidEntranceCycle)
   }
   requestAnimationFrame(voidEntranceCycle);
+  // Developer lookup: reveal the currently active Void entrance on the mainland map.
+  const mapBeforeVoidLocator=drawActiveMap;drawActiveMap=function(){mapBeforeVoidLocator();if(!inVoid&&!miniMap.hidden&&blackHole.active){let mw=mapCanvas.width,mh=mapCanvas.height,x=15+blackHole.x/W*(mw-30),y=43+blackHole.y/H*(mh-58);mapCtx.strokeStyle='#d1a0ff';mapCtx.fillStyle='#6e36bd';mapCtx.lineWidth=4;mapCtx.beginPath();mapCtx.arc(x,y,11,0,Math.PI*2);mapCtx.fill();mapCtx.stroke();mapCtx.fillStyle='#f2ddff';mapCtx.font='900 9px DM Mono';mapCtx.textAlign='center';mapCtx.fillText('VOID',x,y-16)}};
+  const developerBeforeVoidLocator=developerTeleport;developerTeleport=function(choice){let key=choice.toLowerCase().trim();if(['blackhole','black hole','locate black hole','void portal'].includes(key)){if(!blackHole.active){showToast({name:'No black hole is active — check again shortly',color:'#c79cff'});return}if(miniMap.hidden)toggleMap();else drawActiveMap();showToast({name:'Black hole located on the map',color:'#c79cff'});return}developerBeforeVoidLocator(choice)};
+  $('#developerButton').onclick=()=>{let pass=window.prompt('DEVELOPER VERIFICATION: enter password');if(pass!=='TurlyCosmosX'){showToast({name:'Developer access denied',color:'#ff7580'});return}let choice=window.prompt('DEVELOPER PANEL\nEnter a biome, or type blackhole to locate the active Void entrance on the map.\nforest, desert, mountain, caves, volcano, swamp, taiga, jungle, ocean, factory, ice, abyss, basement, plinko, moon, moonbase, void, mushroom, cyber, clouds, wasteland, reactor');if(choice)developerTeleport(choice)};
   applySkin();
   updateUI();
 })();
