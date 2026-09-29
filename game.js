@@ -507,6 +507,7 @@ const centennialBait={x:3820,y:600},finalObbyStart={x:3660,y:600},finalRoom={x:5
   let savannahMoveAt=0;
   function moveSavannah(t){let dt=Math.min(.035,(t-savannahMoveAt)/1000||.016);savannahMoveAt=t;if(inSavannah&&backdrop.hidden&&confirm.hidden&&homeBackdrop.hidden){let dx=(keys.d||keys.arrowright||touch.right?1:0)-(keys.a||keys.arrowleft||touch.left?1:0),dy=(keys.s||keys.arrowdown||touch.down?1:0)-(keys.w||keys.arrowup||touch.up?1:0);if(dx||dy){let length=Math.hypot(dx,dy),step=player.speed*dt;player.x=Math.max(25,Math.min(SAVANNAH_W-25,player.x+dx/length*step));player.y=Math.max(25,Math.min(SAVANNAH_H-25,player.y+dy/length*step))}syncPlayerSprite()}requestAnimationFrame(moveSavannah)}
   requestAnimationFrame(moveSavannah);
+  window.addEventListener('keydown',e=>{if(!inSavannah||!backdrop.hidden||!confirm.hidden||!homeBackdrop.hidden)return;let moves={KeyW:[0,-1],ArrowUp:[0,-1],KeyA:[-1,0],ArrowLeft:[-1,0],KeyS:[0,1],ArrowDown:[0,1],KeyD:[1,0],ArrowRight:[1,0]},move=moves[e.code];if(!move)return;e.preventDefault();let step=e.repeat?10:26;player.x=Math.max(25,Math.min(SAVANNAH_W-25,player.x+move[0]*step));player.y=Math.max(25,Math.min(SAVANNAH_H-25,player.y+move[1]*step));syncPlayerSprite()},true);
   applySkin();
   updateUI();
 })();
