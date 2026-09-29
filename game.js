@@ -467,6 +467,10 @@ const centennialBait={x:3820,y:600},finalObbyStart={x:3660,y:600},finalRoom={x:5
   function syncCompletionTrails(){completionTrails.forEach(t=>{t.dot.style.left=`${screenX(t.x)}px`;t.dot.style.top=`${screenY(t.y)+15}px`})}
   function leaveCompletionTrail(){if(selectedSkin!=='completionist'||homeBackdrop.hidden===false||playerSprite.hidden)return;let worldX=player.x,worldY=player.y;if(completionTrailPosition&&Math.hypot(worldX-completionTrailPosition.x,worldY-completionTrailPosition.y)<17)return;if(Date.now()-completionTrailAt<85)return;completionTrailAt=Date.now();completionTrailPosition={x:worldX,y:worldY};let dot=document.createElement('i'),trail={dot,x:worldX,y:worldY};dot.className='completion-trail-square';playerSprite.parentElement.appendChild(dot);completionTrails.push(trail);syncCompletionTrails();setTimeout(()=>{dot.remove();completionTrails=completionTrails.filter(t=>t!==trail)},700)}
   const syncPlayerSpriteBeforeTrail=syncPlayerSprite;syncPlayerSprite=function(){syncPlayerSpriteBeforeTrail();syncCompletionTrails();leaveCompletionTrail()};
+  // Void entrances follow the Plinko rhythm: five seconds open, then twenty-five seconds away.
+  blackHole.next=0;
+  function voidEntranceCycle(){let now=Date.now(),mainWorld=!inOcean&&!inFactory&&!inIce&&!inAbyss&&!inBasement&&!inPlinko&&!inMoon&&!inMoonBase&&!inVoid&&!inMushroom&&!inCyber&&!inNull&&!inCloud&&!inWasteland&&!inReactor;if(mainWorld&&blackHole.active&&!blackHole.plinkoCycle){let candidate,tries=0;do{candidate={x:80+Math.random()*(W-160),y:110+Math.random()*(H-220)};tries++}while(tries<80&&colliders.some(c=>c.r?Math.hypot(candidate.x-c.x,candidate.y-c.y)<c.r+80:candidate.x>c.x-80&&candidate.x<c.x+c.w+80&&candidate.y>c.y-80&&candidate.y<c.y+c.h+80));blackHole.x=candidate.x;blackHole.y=candidate.y;blackHole.next=blackHole.expires+25000;blackHole.plinkoCycle=true}if(blackHole.active&&now>=blackHole.expires){blackHole.active=false;blackHole.plinkoCycle=false;blackHole.next=now+25000}requestAnimationFrame(voidEntranceCycle)}
+  requestAnimationFrame(voidEntranceCycle);
   applySkin();
   updateUI();
 })();
