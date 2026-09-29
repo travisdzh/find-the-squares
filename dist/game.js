@@ -510,6 +510,9 @@ const centennialBait={x:3820,y:600},finalObbyStart={x:3660,y:600},finalRoom={x:5
   window.addEventListener('keydown',e=>{if(inSavannah&&['KeyW','KeyA','KeyS','KeyD','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.code)){savannahKeys[e.code]=true;e.preventDefault();e.stopImmediatePropagation()}},true);
   window.addEventListener('keyup',e=>{if(inSavannah&&['KeyW','KeyA','KeyS','KeyD','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.code)){savannahKeys[e.code]=false;e.stopImmediatePropagation()}},true);
   document.querySelectorAll('[data-direction]').forEach(b=>['pointerdown','pointerup','pointerleave','pointercancel'].forEach(ev=>b.addEventListener(ev,e=>{if(inSavannah){savannahTouch[b.dataset.direction]=ev==='pointerdown';e.preventDefault();e.stopImmediatePropagation()}},true)));
+  // Keep the Void timer from replacing its immutable portal object; an uncaught timer error can otherwise interrupt unrelated input updates.
+  blackHole.next=Number.MAX_SAFE_INTEGER;let reliableBlackHoleAt=Date.now()+15000;
+  function reliableBlackHoleCycle(){let now=Date.now(),mainland=!inSavannah&&!inOcean&&!inFactory&&!inIce&&!inAbyss&&!inBasement&&!inPlinko&&!inMoon&&!inMoonBase&&!inVoid&&!inMushroom&&!inCyber&&!inNull&&!inCloud&&!inWasteland&&!inReactor;if(blackHole.active&&now>=blackHole.expires){blackHole.active=false;reliableBlackHoleAt=now+15000}if(mainland&&!blackHole.active&&now>=reliableBlackHoleAt)Object.assign(blackHole,{active:true,x:160+Math.random()*(W-320),y:160+Math.random()*(H-320),expires:now+15000});requestAnimationFrame(reliableBlackHoleCycle)}requestAnimationFrame(reliableBlackHoleCycle);
   applySkin();
   updateUI();
 })();
