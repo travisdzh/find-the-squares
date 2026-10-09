@@ -1,0 +1,8 @@
+.player-sprite.skin-celebration{filter:drop-shadow(0 0 8px #ff70bf) drop-shadow(0 5px 1px #0b182799)}
+.player-sprite.skin-celebration .player-body,.player-sprite.skin-celebration .player-arm{background:repeating-linear-gradient(135deg,#ff5fa2 0 7px,#ffd34f 7px 14px,#66e7d3 14px 21px,#8d78ff 21px 28px)}
+.player-sprite.skin-celebration .player-head{background:#ffe16a}
+.player-sprite.skin-celebration .player-head:before{content:'';position:absolute;left:3px;top:-15px;width:18px;height:19px;background:repeating-linear-gradient(90deg,#ff5fa2 0 5px,#61dfd8 5px 10px);clip-path:polygon(50% 0,100% 100%,0 100%);filter:drop-shadow(0 1px #fff)}
+.player-sprite.skin-celebration:after{content:'✦ · ✦';position:absolute;left:-13px;top:-15px;width:68px;color:#fff5a3;font:900 12px Nunito;letter-spacing:4px;animation:celebration-sparkle .8s steps(2) infinite}
+@keyframes celebration-sparkle{50%{transform:translateY(-4px) rotate(8deg);opacity:.4}}
+.skin-preview.celebration{background:repeating-linear-gradient(135deg,#ff5fa2 0 8px,#ffd34f 8px 16px,#66e7d3 16px 24px,#8d78ff 24px 32px)}
+.skin-preview.celebration:after{content:'✦';position:absolute;inset:-20px 0 auto;text-align:center;color:#fff3a3;font-size:24px;text-shadow:0 1px #e8609a}
