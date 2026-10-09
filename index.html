@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="developer-skin.css?v=developer-skin-v1" />
     <link rel="stylesheet" href="bear-skin.css?v=bear-skin-v1" />
     <link rel="stylesheet" href="celebration-skin.css?v=celebration-v1" />
+    <link rel="stylesheet" href="music.css?v=music-v1" />
   </head>
   <body>
     <main class="game-shell">
@@ -62,6 +63,11 @@
           <button class="panel-back" data-home-back aria-label="Back to home menu">← Back</button>
           <h2 id="settingsTitle">Settings</h2>
           <p>Choose and unlock player looks in the Skins tab.</p>
+          <section class="music-settings" aria-labelledby="musicTitle">
+            <h3 id="musicTitle">Music</h3>
+            <label><input type="checkbox" id="musicToggle" checked> Background music</label>
+            <label class="music-volume">Volume <input type="range" id="musicVolume" min="0" max="100" value="35" aria-label="Music volume"> <output id="musicVolumeValue">35%</output></label>
+          </section>
           <button class="home-reset" id="homeResetButton">Reset progress</button>
           <button class="home-reset" id="developerButton">Developer panel</button>
           <div class="settings-secret"><p>There must be something further down…</p><button id="settingsSquare" aria-label="Collect Settings Square">◆</button></div>
