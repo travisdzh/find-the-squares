@@ -57,6 +57,7 @@
           <button class="home-play" id="playButton">Play</button>
           <button id="skinsButton">Skins</button>
           <button id="settingsButton">Settings</button>
+          <button id="musicButton">Music</button>
           <button id="changelogButton">Changelog</button>
         </nav>
         <section class="home-panel" id="settingsPanel" hidden aria-labelledby="settingsTitle">
@@ -77,6 +78,20 @@
           <h2 id="skinsTitle" tabindex="-1">Skins</h2>
           <p>Complete quests to unlock new looks.</p>
           <div id="skinsGrid" class="skins-grid" aria-live="polite"></div>
+        </section>
+        <section class="home-panel music-panel" id="musicPanel" hidden aria-labelledby="musicPanelTitle">
+          <button class="panel-back" data-home-back aria-label="Back to home menu">← Back</button>
+          <h2 id="musicPanelTitle" tabindex="-1">Music</h2>
+          <p>Area themes currently playing in Find The Squares.</p>
+          <ul class="music-credit-list">
+            <li><span>Home</span><strong>Collective Behavior</strong><em>Orka Veer</em></li>
+            <li><span>Mainland</span><strong>Easy Lemon</strong><em>Kevin MacLeod</em></li>
+            <li><span>Cyberspace</span><strong>Galactic Rap</strong><em>Kevin MacLeod</em></li>
+            <li><span>Ocean</span><strong>And Other Approximations</strong><em>Orka Veer</em></li>
+            <li><span>Cloudlands</span><strong>Skydiver</strong><em>Meganeko</em></li>
+            <li><span>Golden Savannah</span><strong>Lord of the Land</strong><em>Kevin MacLeod</em></li>
+            <li><span>Sea Abyss</span><strong>Dripping</strong><em>Unknown author</em></li>
+          </ul>
         </section>
         <section class="home-panel changelog-panel" id="changelogPanel" hidden aria-labelledby="changelogTitle">
           <button class="panel-back" data-home-back aria-label="Back to home menu">← Back</button>
